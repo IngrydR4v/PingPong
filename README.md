@@ -8,5 +8,8 @@
 <f2 align = "left"> **Passo #1**</f2>
 <p> No seu terminal, execute o comando pip install -r requirements.txt. Este comando faz a instalação dos pacotes necessários para que o jogo rode corretamente. <p/>
 
-<f2 align = "left"> **Passo #1**</f2>
+<f2 align = "left"> **Passo #2**</f2>
 <p> Para iniciar o jogo basta executar o comando python pong.py. É levado em consideração que a estrutura de pastas é a mesma deste repositório.<p/>
+
+<f2 align = "left"> **Passo #3**</f2>
+<p> Teste<p/>
