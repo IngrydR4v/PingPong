@@ -12,4 +12,4 @@
 <p> Para iniciar o jogo basta executar o comando python pong.py. É levado em consideração que a estrutura de pastas é a mesma deste repositório.<p/>
 
 <f2 align = "left"> **Passo #3**</f2>
-<p> Teste<p/>
+<p> <p/>
