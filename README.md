@@ -117,7 +117,7 @@
 <p> 8.2 O loop for event in pygame.event.get(): captura os eventos do Pygame. <p/>
 <p> 8.3 Se o evento for do tipo pygame.QUIT, indicando que o usuário fechou a janela do jogo, as funções pygame.quit() e sys.exit() são chamadas para finalizar o Pygame e encerrar o programa. <p/>
 <p> 8.4 Se o evento for do tipo pygame.KEYDOWN, verificamos qual tecla foi pressionada. <p/>
-<p> 8.5 Se a tecla pressionada for a tecla de espaço (pygame.K_SPACE), a função game_loop() é chamada, provavelmente iniciando o loop principal do jogo. <p/>
+<p> 8.5 Se a tecla pressionada for a tecla de espaço (pygame.K_SPACE), a função game_loop() é chamada, provavelmente iniciando o loop pri.ncipal do jogo. <p/>
 <p> 8.6 Se a tecla pressionada for a tecla de escape (pygame.K_ESCAPE) ou se a janela do jogo for fechada, as funções pygame.quit() e sys.exit() são chamadas para encerrar o programa. <p/>
 <p> 8.7 O código faz a renderização do menu principal na tela do jogo. <p/>
 <p> 8.8 Ele define uma fonte para o título e cria um texto renderizado com o título "Pong".<p/>
@@ -127,4 +127,206 @@
 <p> 8.12 O tempo atual é obtido em milissegundos usando "pygame.time.get_ticks()".<p/>
 <p> 8.13 Se o tempo atual dividido por 2000 tiver um resto menor que 1000, ou seja, se estiver dentro do intervalo de 0 a 1000 milissegundos, a mensagem "Pressione espaço para começar" é renderizada e desenhada na tela em uma posição específica.<p/>
 <p> 8.14 Por fim, "pygame.display.flip()" atualiza a tela com todas as alterações feitas durante o loop.<p/>
+</blockquote>
+
+<f2 align = "left"> **Passo #9**</f2>
+<p>Em seguida, já podemos começar a programar o jogo, sendo necessário algumas linhas de código:<p/>
+
+    def game_loop():
+        global ball_dx, ball_dy, score_a, score_b, ball
+
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        return
+                        
+<p>9.1 Nesse trecho, estamos declarando que as variáveis ball_dx, ball_dy, score_a, score_b e ball serão usadas como variáveis globais, criando um loop contínuo que captura eventos como os cliques e ações pelo teclasp e se encerrando apenas após o usuário acessar a tecla "Esc" ou o botão X ☝️.<p/>
+
+            screen.fill(BLACK) 
+            pygame.draw.rect(screen, WHITE, paddle_a)
+            pygame.draw.rect(screen, WHITE, paddle_b)
+            pygame.draw.ellipse(screen, WHITE, ball)
+            pygame.draw.aaline(screen, WHITE, (SCREEN_WIDTH // 2, 0), (SCREEN_WIDTH // 2, SCREEN_HEIGHT))
+            
+<p>9.2 O código acima é responsável por desenhar diferentes formas na tela do jogo utilizando a biblioteca Pygame ☝️.<p/>
+
+            keys = pygame.key.get_pressed()
+            
+<p>9.3 Utilizada para obter o estado atual de todas as teclas do teclado ☝️.<p/>
+
+            if keys[pygame.K_w] and paddle_a.top > 0:
+                paddle_a.y -= PADDLE_SPEED
+            if keys[pygame.K_s] and paddle_a.bottom < SCREEN_HEIGHT:
+                paddle_a.y += PADDLE_SPEED
+                
+<p>9.4 Movimento Vertical Raquete 'A' ☝️.<p/>
+
+            if keys[pygame.K_UP] and paddle_b.top > 0:
+                paddle_b.y -= PADDLE_SPEED
+            if keys[pygame.K_DOWN] and paddle_b.bottom < SCREEN_HEIGHT:
+                paddle_b.y += PADDLE_SPEED
+                
+ <p>9.5 Movimento Vertical Raquete 'B' ☝️.<p/>
+
+            if keys[pygame.K_a] and paddle_a.left > 0:
+                paddle_a.x -= PADDLE_SPEED
+            if keys[pygame.K_d] and paddle_a.right < SCREEN_WIDTH // 2 - 70:
+                paddle_a.x += PADDLE_SPEED
+                
+<p>9.6 Movimento Horizontal Raquete 'A' ☝️.<p/>
+
+            if keys[pygame.K_UP]:
+                self.paddle_b.movey(-self.PADDLE_SPEED)
+            if keys[pygame.K_DOWN]:
+                self.paddle_b.movey(self.PADDLE_SPEED)
+                
+<p>9.7 Movimento Vertical Paddle 'B' ☝️.<p/>
+
+            if keys[pygame.K_LEFT] and self.paddle_b.left > self.SCREEN_WIDTH // 2 + 70:
+                self.paddle_b.movex(-self.PADDLE_SPEED)
+            if keys[pygame.K_RIGHT] and self.paddle_b.right < self.SCREEN_WIDTH:
+                self.paddle_b.movex(self.PADDLE_SPEED)
+                
+<p>9.8 Movimento Horizontal Paddle 'B' ☝️.<p/>
+
+            ball.x += ball_dx
+            ball.y += ball_dy
+
+<p>9.9 Atualização da posição da bola ☝️.<p/>
+
+            if ball.colliderect(paddle_a):
+                ball.left = paddle_a.right
+                ball_dx = -ball_dx
+                collision_sound_A.play()
+
+            elif ball.colliderect(paddle_b):
+                ball.right = paddle_b.left
+                ball_dx = -ball_dx
+                collision_sound_B.play()
+                
+<p>9.10 Verifica se houve colisões com a bola, sendo ajustada à direita ou esquerda de acordo com o local batido, além de configurar a velocidade da bola e os sons que devem ser ouvidos de acordo com o localização da bola ☝️.<p/>
+
+            if self.ball.top <= 0 or self.ball.bottom >= self.SCREEN_HEIGHT:
+                self.ball.reverse_dy()
+                
+<p>9.11 Informa que a bola pode bater tanto em cima quanto em baixo ☝️.<p/>
+
+            if self.ball.left <= 0:
+                self.score_b += 1
+                self.reset_ball()
+                #print(f"Score B: {self.score_b}")
+                self.point_sound.play()
+                if self.score_b == 10:
+                    self.end_game(False)
+
+            elif self.ball.right >= self.SCREEN_WIDTH:
+                self.score_a += 1
+                self.reset_ball()
+                #print(f"Score A: {self.score_a}")
+                self.point_sound.play()
+                if self.score_a == 10:
+                    self.end_game(True)
+    
+<p>9.12 Mantém a pontuação atualizada ☝️.<p/>
+
+            if ball.top <= 0 or ball.bottom >= SCREEN_HEIGHT:
+                ball_dy = -ball_dy
+                
+<p>9.13 Quando a bola bate na extreminade da tela, é redirecionada para outra localidade ☝️.<p/>
+
+            if ball.left <= 0:
+                score_b += 1
+                ball.x = SCREEN_WIDTH // 2 - BALL_SIZE // 2
+                ball.y = SCREEN_HEIGHT // 2 - BALL_SIZE // 2
+                ball_dx = -ball_dx
+                point_sound.play()
+                # print(score_b)
+                if score_b == 10: #Comente
+                    end_game(False)
+                    
+<p>9.14 Informa mais um ponto para o time B ☝️.<p/>
+
+            elif ball.right >= SCREEN_WIDTH:
+                score_a += 1
+                ball.x = SCREEN_WIDTH // 2 - BALL_SIZE // 2
+                ball.y = SCREEN_HEIGHT // 2 - BALL_SIZE // 2
+                ball_dx = -ball_dx
+                point_sound.play()
+                # print(score_a)
+                if score_a == 10: #Comente
+                    end_game(True)
+                    
+<p>9.15 Informa mais um ponto para o time A ☝️.<p/>
+
+            score_text = font.render(f"{score_a}  {score_b}", True, WHITE)
+            score_rect = score_text.get_rect(center=(SCREEN_WIDTH // 2, 30))
+            screen.blit(score_text, score_rect)
+            
+<p>9.16 Apresenta o placar na tela ☝️.<p/>
+
+            pygame.display.flip()
+            
+<p>9.17 Mantém a tela atualizada ☝️.<p/>
+
+            clock = pygame.time.Clock()
+            clock.tick(60)
+            
+<p>9.18 Controla o tempo da partida ☝️.<p/>
+
+<f2 align = "left"> **Passo #10**</f2>
+<p>Assim já podemos nos encaminhar para a reta final do jogo... Olha só:<p/>
+
+        def end_game(winner): 
+            while True:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        pygame.quit()
+                        sys.exit()
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_SPACE:
+                            reset_game()
+                            return
+                        elif event.key == pygame.K_ESCAPE:
+                            pygame.quit()
+                            sys.exit()
+
+
+                mixer.music.stop()
+                screen.fill(BLACK)
+                if winner:
+                    winner_text = "Player 2 Wins!"
+                else:
+                    winner_text = "Player 1 Wins!"
+
+                winner_font = pygame.font.Font(font_file, 36)
+                winner_render = winner_font.render(winner_text, True, WHITE)
+                winner_rect = winner_render.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 4))
+                screen.blit(winner_render, winner_rect)
+                pygame.display.flip()
+
+<p>A função acima lida com o fim do jogo, exibindo o vencedor na tela e permitindo que o jogador reinicie o jogo ou encerre o programa.<p/>
+<blockquote style="background-color: #F5F8F9;">
+<p> 10.1 O código entra em um loop while True para aguardar ações do usuário.<p/>
+
+<p> 10. 2 Ele captura os eventos do Pygame usando pygame.event.get() e itera sobre eles.<p/>
+
+<p> 10.3 Se o evento capturado for do tipo pygame.QUIT (o usuário clicou no botão "X" para fechar a janela), o programa é encerrado chamando pygame.quit() e sys.exit().<p/>
+
+<p>10.4 Se o evento capturado for do tipo pygame.KEYDOWN (o usuário pressionou uma tecla), são realizadas as seguintes verificações:
+-- Se a tecla pressionada for a tecla "SPACE", o jogo é reiniciado chamando a função reset_game() (não mostrada no código) e a função end_game é encerrada com o comando return.
+-- Se a tecla pressionada for a tecla "ESCAPE", o programa é encerrado chamando pygame.quit() e sys.exit().<p/>
+    
+<p>10.5 Em seguida, a música de fundo é interrompida (mixer.music.stop()), a tela é preenchida com a cor preta (screen.fill(BLACK)), e um texto é renderizado na tela dependendo do vencedor do jogo.<p/>
+
+<p> 10.6 O texto é renderizado usando uma fonte definida anteriormente e a cor branca (winner_font.render(winner_text, True, WHITE)).<p/>
+
+<p> 10.7 A posição do texto é calculada e colocado no centro da tela (winner_rect = winner_render.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 4))).<p/>
+
+<p> 10.8 O texto é exibido na tela usando screen.blit(winner_render, winner_rect). <p/>
+
+<p>10.9 Por fim, as mudanças são atualizadas na tela com pygame.display.flip().<p/> 
 </blockquote>
