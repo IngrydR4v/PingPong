@@ -330,3 +330,24 @@
 
 <p>10.9 Por fim, as mudanças são atualizadas na tela com pygame.display.flip().<p/> 
 </blockquote>
+
+<f2 align = "left"> **Passo #11**</f2>
+<p>Entretanto, o usuário ainda pode retomar o jogo novamente do 0, sendo possível por meio do seguinte código:<p/>
+
+        def reset_game():
+            global paddle_a, paddle_b, ball, ball_dx, ball_dy, score_a, score_b
+
+            paddle_a = pygame.Rect(20, SCREEN_HEIGHT // 2 - PADDLE_HEIGHT // 2, PADDLE_WIDTH, PADDLE_HEIGHT)
+            paddle_b = pygame.Rect(SCREEN_WIDTH - 20 - PADDLE_WIDTH, SCREEN_HEIGHT // 2 - PADDLE_HEIGHT // 2, PADDLE_WIDTH, PADDLE_HEIGHT)
+            ball = pygame.Rect(SCREEN_WIDTH // 2 - BALL_SIZE // 2, SCREEN_HEIGHT // 2 - BALL_SIZE // 2, BALL_SIZE, BALL_SIZE)
+            ball_dx, ball_dy = BALL_SPEED, BALL_SPEED
+            score_a, score_b = 0, 0
+            
+<p>Nesse caso, todas as variáveis são reiniciadas com o objetivo de que o jogo seja iniciado novamente sem obter histórico da partida anterior.<p/>
+
+# FSM - Máquina de Estado Infinito 💻
+<blockquote style="background-color: #F5F8F9;">
+<p> Uma FSM máquina de estado infinito é uma variação da FSM tradicional que permite que o sistema permaneça em um estado específico indefinidamente. Normalmente, em uma FSM, quando um evento ocorre e uma transição é feita para um novo estado, o sistema permanece nesse novo estado até que outro evento ocorra e uma nova transição seja feita. No entanto, em uma FSM máquina de estado infinito, existe pelo menos um estado que o sistema pode entrar e permanecer sem transitar para outro estado.<p/> 
+<p> As FSMs, incluindo as máquinas de estado infinito, são amplamente utilizadas em vários domínios, como jogos, sistemas embarcados, automação industrial e muitos outros, devido à sua capacidade de representar e controlar o comportamento complexo de sistemas com estados bem definidos.<p/> 
+<p> No caso do PingPong, a estrutura também foi utilizada, sendo essa apresentada por meio da pasta "dist".
+</blockquote>
