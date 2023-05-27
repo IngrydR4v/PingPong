@@ -1,6 +1,6 @@
 # Jogo de Ping Pong 🏓
 
-<img src="pingpong.png" align="center"/>
+<img src="pong.gif" align="center"/>
 
 <f2 align = "left"> **O seguinte projeto possui o objetivo de apresentar um jogo de Ping Pong em 2D. Para criar o seu projeto, siga as instruções disponíveis.**</f2>
 <hr> </hr>
